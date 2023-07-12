@@ -1,0 +1,65 @@
+query Input {
+  discountNode {
+    firstConfig: metafield(
+      namespace: "$app:product-discount-fn-ts"
+      key: "function-config1"
+    ) {
+      type
+      value
+    }
+    secondConfig: metafield(
+      namespace: "$app:product-discount-fn-ts"
+      key: "function-config2"
+    ) {
+      type
+      value
+    }
+  }
+
+  cart {
+    attribute {
+      key
+      value
+    }
+    cost {
+      subtotalAmount {
+        amount
+        currencyCode
+      }
+      totalAmount {
+        amount
+        currencyCode
+      }
+    }
+    lines {
+      id
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+          product {
+            id
+            metafield(key: "custom", namespace: "volume_discount_config") {
+              type
+              value
+            }
+          }
+        }
+      }
+      cost {
+        amountPerQuantity {
+          amount
+          currencyCode
+        }
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+      }
+    }
+  }
+}

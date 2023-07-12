@@ -1,0 +1,36 @@
+{
+  "name": "drifiresystem-shopify",
+  "version": "1.0.0",
+  "main": "web/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "shopify": "shopify",
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "generate": "shopify app generate",
+    "deploy": "shopify app deploy"
+  },
+  "dependencies": {
+    "@shopify/app": "3.47.3",
+    "@shopify/cli": "3.47.3"
+  },
+  "graphql": {
+    "projects": {
+      "product-discount-fn-ts": {
+        "schema": "./extensions/product-discount-fn-ts/schema.graphql",
+        "documents": [
+          "./extensions/product-discount-fn-ts/input.graphql"
+        ]
+      },
+      "order-discount-fn-ts": {
+        "schema": "./extensions/order-discount-fn-ts/schema.graphql",
+        "documents": [
+          "./extensions/order-discount-fn-ts/input.graphql"
+        ]
+      }
+    }
+  },
+  "author": "husseyexplores",
+  "private": true
+}

@@ -1,0 +1,1 @@
+export * as shops from './shops.js'
