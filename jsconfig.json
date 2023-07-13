@@ -3,6 +3,8 @@
     "baseUrl": "./web",
     "paths": {
       "~/*.js": ["./backend/*.js"]
-    }
+    },
+    "checkJs": true,
+    "jsx": "react-jsx"
   }
 }

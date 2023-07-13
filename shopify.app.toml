@@ -1,3 +1,6 @@
 # This file stores configurations for your Shopify app.
+name = "Custom Discounts"
 
 scopes = "write_products,write_cart_transforms,write_discounts"
+extension_directories = ["extensions/*"]
+web_directories = ["web/*"]

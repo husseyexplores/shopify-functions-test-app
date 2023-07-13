@@ -1,4 +1,5 @@
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { I18nContext, I18nManager } from '@shopify/react-i18n'
 import { NavigationMenu } from '@shopify/app-bridge-react'
 
 import { routes as pageRoutes } from './router'
@@ -9,22 +10,31 @@ import {
   QueryProvider,
 } from './components'
 
+const locale = 'en'
+const i18nManager = new I18nManager({
+  locale,
+  onError(error) {
+    console.log('i18nManager `onError`', error)
+  },
+})
+
 const router = createBrowserRouter([
   {
     element: (
-
       <AppBridgeProvider>
-        <QueryProvider>
-          <NavigationMenu
-            navigationLinks={[
-              {
-                label: 'Home',
-                destination: '/',
-              },
-            ]}
-          />
-          <Outlet />
-        </QueryProvider>
+        <I18nContext.Provider value={i18nManager}>
+          <QueryProvider>
+            <NavigationMenu
+              navigationLinks={[
+                {
+                  label: 'Home',
+                  destination: '/',
+                },
+              ]}
+            />
+            <Outlet />
+          </QueryProvider>
+        </I18nContext.Provider>
       </AppBridgeProvider>
     ),
     children: pageRoutes,
@@ -32,6 +42,7 @@ const router = createBrowserRouter([
   },
 ])
 
+// @ts-ignore
 window.pageRoutes = pageRoutes
 
 export default function App() {

@@ -69,6 +69,19 @@ importers:
         specifier: ^0.29.2
         version: 0.29.2
 
+  extensions/volume-discount-order:
+    dependencies:
+      '@shopify/shopify_function':
+        specifier: 0.0.3
+        version: 0.0.3(@babel/core@7.22.8)(@types/node@18.16.19)
+      javy:
+        specifier: 0.1.0
+        version: 0.1.0
+    devDependencies:
+      vitest:
+        specifier: ^0.29.8
+        version: 0.29.8
+
   web:
     dependencies:
       '@husseyexplores/shopify-app-session-storage-firestore':
@@ -130,14 +143,20 @@ importers:
         specifier: ^3.7.8
         version: 3.7.8(react@18.2.0)
       '@shopify/discount-app-components':
-        specifier: ^1.0.7
-        version: 1.0.7(@shopify/app-bridge-react@3.7.8)(@shopify/app-bridge@3.7.8)(@shopify/polaris@11.4.5)(react-dom@18.2.0)(react@18.2.0)
+        specifier: github:pnmcosta/discount-app-components-v11
+        version: github.com/pnmcosta/discount-app-components-v11/f0e9fedffe60cf75a51a269c7bda7d105954938c(@shopify/app-bridge-react@3.7.8)(@shopify/app-bridge@3.7.8)(@shopify/polaris@11.4.5)(react-dom@18.2.0)(react@18.2.0)
       '@shopify/polaris':
         specifier: ^11.4.5
         version: 11.4.5(react-dom@18.2.0)(react@18.2.0)
+      '@shopify/polaris-icons':
+        specifier: ^7.3.0
+        version: 7.3.0
       '@shopify/react-form':
         specifier: ^2.5.5
         version: 2.5.5(react@18.2.0)
+      '@shopify/react-i18n':
+        specifier: ^7.8.0
+        version: 7.8.0(react-dom@18.2.0)(react@18.2.0)
       '@tanstack/react-query':
         specifier: ^4.29.19
         version: 4.29.19(react-dom@18.2.0)(react@18.2.0)
@@ -2432,49 +2451,16 @@ packages:
       - zod
     dev: false
 
-  /@shopify/dates@1.1.5:
-    resolution: {integrity: sha512-WpShtWjylq0iH4FQhpEz1g5tCZRw/GgZ00uYUxUinVyBqaUbRqiAq7EnwXzGO/aTpAUF6yXgDTxoji3aFOiC8A==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/dates@2.0.3:
+    resolution: {integrity: sha512-M8KFecsj+3JJYLMphvwe+52WYu4j0Eqfve1r+LUL6mMwbBCC6vRo59bamHh5UoIEd44Yp2H2a0X9up/wBphavw==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     dependencies:
-      '@shopify/decorators': 2.0.8
+      '@shopify/function-enhancers': 3.0.1
     dev: false
 
-  /@shopify/decorators@2.0.8:
-    resolution: {integrity: sha512-nm/RmyDnEGP7rcn+hyPSUrb/j0G5mrtYP69f8AwJmVLgDp/6bOTYfOOUXB1AXBg9ILHWdFQv5ItYdmJB48y/Xw==}
-    engines: {node: '>=12.14.0'}
-    dependencies:
-      '@shopify/function-enhancers': 2.0.8
-    dev: false
-
-  /@shopify/discount-app-components@1.0.7(@shopify/app-bridge-react@3.7.8)(@shopify/app-bridge@3.7.8)(@shopify/polaris@11.4.5)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Y+8Z8ldkBC/5JY1l7OHS/OA0NSDcziHsfocsNblF64YGqMjK4jv/rQufiEhKehbLfkQwr6l8tVeMKfHNJ5IrdQ==}
-    engines: {node: '>=16.13.0'}
-    peerDependencies:
-      '@shopify/app-bridge': ^3.1.0
-      '@shopify/app-bridge-react': ^3.1.0
-      '@shopify/polaris': ^9.7.0 || ^10.0.0
-      react: ^16.14.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@shopify/admin-graphql-api-utilities': 2.1.0
-      '@shopify/app-bridge': 3.7.8
-      '@shopify/app-bridge-react': 3.7.8(react@18.2.0)
-      '@shopify/dates': 1.1.5
-      '@shopify/polaris': 11.4.5(react-dom@18.2.0)(react@18.2.0)
-      '@shopify/polaris-icons': 4.23.0
-      '@shopify/react-hooks': 2.1.19(react@18.2.0)
-      '@shopify/react-i18n': 6.4.0(react-dom@18.2.0)(react@18.2.0)
-      d3-time-format: 2.1.1
-      lodash: 4.17.21
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /@shopify/function-enhancers@2.0.8:
-    resolution: {integrity: sha512-/nv59+ycOVV2ZKixl6V1d+xJmfMN40qUEmpFgbXhCnNjAE/vz3nJPal70Esp4Li2NR3GzKVJklZk3Y3pG+W1vw==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/function-enhancers@3.0.1:
+    resolution: {integrity: sha512-+p/cIPsaJjJ9VLMSg3+pSbZJ1GlY7KVDTokFyfxrtOzIDe5tCDZoHMiXsm6hpNRDMaBz8/404EpThuzo4gQ84Q==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     dev: false
 
   /@shopify/function-runner@4.1.0:
@@ -2485,9 +2471,9 @@ packages:
       node-fetch: 3.3.1
     dev: false
 
-  /@shopify/i18n@1.0.9:
-    resolution: {integrity: sha512-ZxoIB8UTmWHvRig6E4zvYJt3fAa24iJGYTQLHsjZBV3cmqi/AiSet9Qys7GkqzKcYV/4xukZIfpeWXVjef3v7A==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/i18n@2.0.1:
+    resolution: {integrity: sha512-jssYom4LsUGx94D1ANzxWxKdJWcRj6YLBF9+7g0HXHE/IdCMbUlTOYWbe1MK4b1hoBipuLb/537XV4+J8af8dw==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     dev: false
 
   /@shopify/network@3.2.1:
@@ -2578,10 +2564,6 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@shopify/polaris-icons@4.23.0:
-    resolution: {integrity: sha512-70iT2GNXVASA7jPtuKTsPKoq82Ws/x9Nu1sGuTnvchQpeltFG9oJEu/1r9AuTS05dQoM6fivnOCxZGy5XnCFqw==}
-    dev: false
-
   /@shopify/polaris-icons@7.3.0:
     resolution: {integrity: sha512-hR43Q6OEO1h+JjOJsW93PT11q03IHUhzMRdy+7o3jzsr3tgjPW6GQ90wD8ssMDPOf0zH70Y1vHUbW/686JRfcg==}
     engines: {node: ^16.17.0 || >=18.12.0}
@@ -2615,12 +2597,12 @@ packages:
     engines: {node: ^14.17.0 || >=16.0.0}
     dev: false
 
-  /@shopify/react-effect@4.1.12(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Zy0CH0onvv/Jll4ePxvWa1STS6cILjoFI+6LxMFapC8ZVcCQdnrQFLmuoyF+rfyuFqJtwHE9y1sDZcP+EkW3GQ==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/react-effect@5.0.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-xBOzxApzO/KNo1xbdodWNFbRvsCymnnjLiZr3KehOgqp/aSb7fMJw5o6COeo9v2k4phoUlbWXye+JJuEOB8DTA==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
-      react: '>=16.8.0 <18.0.0'
-      react-dom: '>=16.8.0 <18.0.0'
+      react: '>=16.8.0 <19.0.0'
+      react-dom: '>=16.8.0 <19.0.0'
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -2639,15 +2621,6 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@shopify/react-hooks@2.1.19(react@18.2.0):
-    resolution: {integrity: sha512-IZ1RbYB9fHfERveg8ZdAbJcZ7uN1yDH/4Jse8v8+GI3YlGnKn31XSB6vmk5v5Ti2kNvOK84LFdcmRDWRQa3k3A==}
-    engines: {node: '>=12.14.0'}
-    peerDependencies:
-      react: '>=16.8.0 <18.0.0'
-    dependencies:
-      react: 18.2.0
-    dev: false
-
   /@shopify/react-hooks@3.0.5(react@18.2.0):
     resolution: {integrity: sha512-FzTkzFELTkfU0ErcURY2eAPRwFP3MkyeAl09STIbvfNLkNcFIG9i3869KAdFrSwRsR7WZ3PdWkWFcLAuRJPvpg==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -2657,19 +2630,18 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@shopify/react-i18n@6.4.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-slWBcgfYD2QstNRQTZxXI8iJdPyhek32N8TeGLU315K2zvIGPzOZaFRN+2dzVlY8WWFd/auQ7xY5x+a3gOx5tg==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/react-i18n@7.8.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-O8yIbw0xOndd2JdHLCsj+E66kmul5jsvFKmrf8zZXOF3xkVs8+7SR8ZQplO9QazOCiyhIiZIuC+vSZcQTSxbBg==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
-      react: '>=16.8.0 <18.0.0'
+      react: '>=16.8.0 <19.0.0'
     dependencies:
-      '@shopify/dates': 1.1.5
-      '@shopify/decorators': 2.0.8
-      '@shopify/function-enhancers': 2.0.8
-      '@shopify/i18n': 1.0.9
-      '@shopify/react-effect': 4.1.12(react-dom@18.2.0)(react@18.2.0)
-      '@shopify/react-hooks': 2.1.19(react@18.2.0)
-      '@shopify/useful-types': 4.0.3
+      '@shopify/dates': 2.0.3
+      '@shopify/function-enhancers': 3.0.1
+      '@shopify/i18n': 2.0.1
+      '@shopify/react-effect': 5.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@shopify/react-hooks': 3.0.5(react@18.2.0)
+      '@shopify/useful-types': 5.1.2
       '@types/hoist-non-react-statics': 3.3.1
       change-case: 4.1.2
       glob: 7.2.3
@@ -2759,9 +2731,9 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@shopify/useful-types@4.0.3:
-    resolution: {integrity: sha512-vT48uKFSTfI3HPqtNI3lahWRDncFuuzBVfj2eUxEpQO//3Sn+IIo4zRPT9W4EHBiVWJyBeW5CTzVtvGhQma4EA==}
-    engines: {node: '>=12.14.0'}
+  /@shopify/useful-types@5.1.2:
+    resolution: {integrity: sha512-EjwIljAYHT1pfIxdMFp6ytJvCUmKXa5NWsvG7zXFX5EnLs7wYp66M/QCuoyJjI0Lq+5ZVyrJXJqqeBiXQVVs0w==}
+    engines: {node: ^14.17.0 || >=16.0.0}
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -3301,7 +3273,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -4283,8 +4255,9 @@ packages:
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  /d3-time-format@2.1.1:
-    resolution: {integrity: sha512-8kAkymq2WMfzW7e+s/IUNAtN/y3gZXGRrdGfo6R8NKPAA85UBTxZg5E61bR6nLwjPjj4d3zywSQe1CkYLPFyrw==}
+  /d3-time-format@4.1.0:
+    resolution: {integrity: sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==}
+    engines: {node: '>=12'}
     dependencies:
       d3-time: 1.1.0
     dev: false
@@ -4349,6 +4322,7 @@ packages:
         optional: true
     dependencies:
       ms: 2.1.2
+    dev: true
 
   /debug@4.3.4(supports-color@8.1.1):
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
@@ -5627,7 +5601,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5675,7 +5649,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -6219,7 +6193,7 @@ packages:
     dependencies:
       '@types/express': 4.17.17
       '@types/jsonwebtoken': 9.0.2
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       jose: 4.14.4
       limiter: 1.1.5
       lru-memoizer: 2.2.0
@@ -7658,7 +7632,7 @@ packages:
     resolution: {integrity: sha512-wfI3pk7EE80lCIXprqh7ym48IHYdwmAAzESdbU8Q9l7pnRCk9LEhpbOTNKjz6FARLm/Bl5m+4F0ABxOkYUujSQ==}
     engines: {node: '>=12'}
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@8.1.1)
       extend: 3.0.2
     transitivePeerDependencies:
       - supports-color
@@ -9173,4 +9147,35 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+    dev: false
+
+  github.com/pnmcosta/discount-app-components-v11/f0e9fedffe60cf75a51a269c7bda7d105954938c(@shopify/app-bridge-react@3.7.8)(@shopify/app-bridge@3.7.8)(@shopify/polaris@11.4.5)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {tarball: https://codeload.github.com/pnmcosta/discount-app-components-v11/tar.gz/f0e9fedffe60cf75a51a269c7bda7d105954938c}
+    id: github.com/pnmcosta/discount-app-components-v11/f0e9fedffe60cf75a51a269c7bda7d105954938c
+    name: '@shopify/discount-app-components'
+    version: 1.0.7
+    engines: {node: '>=16.13.0'}
+    prepare: true
+    requiresBuild: true
+    peerDependencies:
+      '@shopify/app-bridge': ^3.7.7
+      '@shopify/app-bridge-react': ^3.7.7
+      '@shopify/polaris': ^11.0.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@shopify/admin-graphql-api-utilities': 2.1.0
+      '@shopify/app-bridge': 3.7.8
+      '@shopify/app-bridge-react': 3.7.8(react@18.2.0)
+      '@shopify/dates': 2.0.3
+      '@shopify/polaris': 11.4.5(react-dom@18.2.0)(react@18.2.0)
+      '@shopify/polaris-icons': 7.3.0
+      '@shopify/react-hooks': 3.0.5(react@18.2.0)
+      '@shopify/react-i18n': 7.8.0(react-dom@18.2.0)(react@18.2.0)
+      d3-time-format: 4.1.0
+      lodash: 4.17.21
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - supports-color
     dev: false

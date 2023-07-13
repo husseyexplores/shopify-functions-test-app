@@ -22,7 +22,9 @@ import {
   Layout,
   Page,
   TextField,
-  Stack,
+  LegacyStack,
+  LegacyCard,
+  Breadcrumbs,
   PageActions,
 } from '@shopify/polaris'
 
@@ -37,7 +39,7 @@ export default function VolumeNew() {
 
   const app = useAppBridge()
   const redirect = Redirect.create(app)
-  const currencyCode = CurrencyCode.Cad
+  const currencyCode = CurrencyCode.Usd
   const authenticatedFetch = useAuthenticatedFetch()
 
   const {
@@ -164,12 +166,20 @@ export default function VolumeNew() {
   return (
     <Page
       title="Create volume discount"
-      breadcrumbs={[
-        {
-          content: 'Discounts',
-          onAction: () => onBreadcrumbAction(redirect, true),
-        },
-      ]}
+      // breadcrumbs={[
+      //   {
+      //     content: 'Discounts',
+      //     onAction: () => onBreadcrumbAction(redirect, true),
+      //   },
+      // ]}
+      additionalMetadata={
+        <Breadcrumbs
+          backAction={{
+            content: 'Discounts',
+            onAction: () => onBreadcrumbAction(redirect, true),
+          }}
+        />
+      }
       primaryAction={{
         content: 'Save',
         onAction: submit,
@@ -188,22 +198,25 @@ export default function VolumeNew() {
               discountCode={discountCode}
               discountMethod={discountMethod}
             />
+
             {/* Collect data for the configuration metafield. */}
-            <Card title="Volume">
-              <Card.Section>
-                <Stack>
+            <LegacyCard title="Volume">
+              <LegacyCard.Section>
+                <LegacyStack>
                   <TextField
                     label="Minimum quantity"
+                    autoComplete="off"
                     {...configuration.quantity}
                   />
                   <TextField
                     label="Discount percentage"
+                    autoComplete="off"
                     {...configuration.percentage}
                     suffix="%"
                   />
-                </Stack>
-              </Card.Section>
-            </Card>
+                </LegacyStack>
+              </LegacyCard.Section>
+            </LegacyCard>
             {discountMethod.value === DiscountMethod.Code && (
               <UsageLimitsCard
                 totalUsageLimit={usageTotalLimit}
@@ -240,6 +253,7 @@ export default function VolumeNew() {
             performance={{
               status: DiscountStatus.Scheduled,
               usageCount: 0,
+              isEditing: false,
             }}
             minimumRequirements={{
               requirementType: requirementType.value,
@@ -277,3 +291,21 @@ export default function VolumeNew() {
     </Page>
   )
 }
+
+// debug router
+/*
+import { useLocation, useParams } from "react-router-dom"
+
+export default function NewPage() {
+  const params = useParams()
+  const loc = useLocation()
+  return <div>
+    <h1>NEW: shopify-functions/volute-discount-order/{'[functionId]'}/{'[new.jsx]'}</h1>
+
+    <div>
+      <h3>pathname: {loc.pathname}</h3>
+      <pre>{JSON.stringify(params)}</pre>
+    </div>
+  </div>
+}
+*/

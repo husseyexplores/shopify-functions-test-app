@@ -1,19 +1,8 @@
 //@ts-check
-import React from 'react'
-import {
-  LegacyCard,
-  Page,
-  Layout,
-  Image,
-  LegacyStack as Stack,
-  VerticalStack,
-  Link,
-  Text,
-  Button,
-} from '@shopify/polaris'
+import { Page, Layout } from '@shopify/polaris'
 import { TitleBar, useNavigate } from '@shopify/app-bridge-react'
 import { ProductsCard } from '../components'
-import { useAuthenticatedFetch } from '../hooks'
+// import { useAuthenticatedFetch } from '../hooks'
 
 export default function HomePage() {
   return (

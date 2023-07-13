@@ -15,9 +15,11 @@
   "dependencies": {
     "@shopify/app-bridge": "^3.7.8",
     "@shopify/app-bridge-react": "^3.7.8",
-    "@shopify/discount-app-components": "^1.0.7",
+    "@shopify/discount-app-components": "github:pnmcosta/discount-app-components-v11",
     "@shopify/polaris": "^11.4.5",
+    "@shopify/polaris-icons": "^7.3.0",
     "@shopify/react-form": "^2.5.5",
+    "@shopify/react-i18n": "^7.8.0",
     "@tanstack/react-query": "^4.29.19",
     "@tanstack/react-query-devtools": "^4.29.19",
     "@vitejs/plugin-react": "^4.0.2",

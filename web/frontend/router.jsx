@@ -7,10 +7,54 @@
  *
  */
 
+/**
+ * @param {string} segment
+ * @param {boolean} [fixIndex=false]
+ * @returns {string}
+ */
+function segmentToRoutePathSegment(segment, fixIndex = false) {
+  // remix-style dyamic path
+  if (segment.startsWith('$')) {
+    return segment.replace('$', ':')
+  }
+
+  // nextjs-style dyamic path
+  if (segment.startsWith('[') && segment.endsWith(']')) {
+    const name = segment.slice(1, -1)?.trim()
+    if (segment.length <= 2 || name.length === 0) return null
+
+    return `:${name}`
+  }
+
+  if (!fixIndex) return segment
+
+  const lowercased = segment.toLowerCase()
+  return lowercased === 'index' ? '' : segment
+}
+
+/**
+ *
+ * @param {string} fullFilepath
+ * @returns {string}
+ */
+function filenameToRoutePath(fullFilepath) {
+  const segments = fullFilepath.split('/')
+  return segments
+    .map((segment, index) => {
+      const isLast = index === segments.length - 1
+      const path = segmentToRoutePathSegment(segment, isLast)
+      if (path == null)
+        throw new Error(`Dynamic filename must not be empty: ${fullFilepath}`)
+      return path
+    })
+    .join('/')
+}
+
 /** @type {Pages} */
+// @ts-ignore
 const pages = import.meta.glob('./pages/**/*.(tsx|jsx)', { eager: true })
 
-/** @type {IRoute} */
+/** @type {IRoute[]} */
 const routeItems = []
 
 for (const path of Object.keys(pages)) {
@@ -19,9 +63,7 @@ for (const path of Object.keys(pages)) {
     continue
   }
 
-  const normalizedPathName = fileName.startsWith('$')
-    ? fileName.replace('$', ':')
-    : fileName.replace(/\/index/, '')
+  const routePath = filenameToRoutePath(fileName)
 
   /** @type {LoaderFunction | undefined} */
   const loader = pages[path]?.loader
@@ -30,7 +72,7 @@ for (const path of Object.keys(pages)) {
   const action = pages[path]?.action
 
   routeItems.push({
-    path: fileName === 'index' ? '/' : `/${normalizedPathName.toLowerCase()}`,
+    path: fileName === 'index' ? '/' : `/${routePath.toLowerCase()}`,
     Element: pages[path].default,
     loader,
     action,
@@ -39,10 +81,8 @@ for (const path of Object.keys(pages)) {
 }
 
 /** @type {RouteObject[]}} */
-export const routes = routeItems.map(
-  ({ Element, ErrorBoundary, ...rest }) => ({
-    ...rest,
-    element: Element ? <Element /> : undefined,
-    errorElement: ErrorBoundary ? <ErrorBoundary /> : undefined,
-  }),
-)
+export const routes = routeItems.map(({ Element, ErrorBoundary, ...rest }) => ({
+  ...rest,
+  element: Element ? <Element /> : undefined,
+  errorElement: ErrorBoundary ? <ErrorBoundary /> : undefined,
+}))
