@@ -72,7 +72,7 @@ for (const path of Object.keys(pages)) {
   const action = pages[path]?.action
 
   routeItems.push({
-    path: fileName === 'index' ? '/' : `/${routePath.toLowerCase()}`,
+    path: fileName === 'index' ? '/' : `/${routePath}`,
     Element: pages[path].default,
     loader,
     action,

@@ -195,13 +195,13 @@ function VolumeNew() {
             <MethodCard
               title="Volume"
               discountTitle={discountTitle}
-              discountClass={DiscountClass.Product}
+              discountClass={DiscountClass.Order}
               discountCode={discountCode}
               discountMethod={discountMethod}
             />
 
             {/* Collect data for the configuration metafield. */}
-            <LegacyCard title="Volume">
+            <LegacyCard title="Value">
               <LegacyCard.Section>
                 <LegacyStack>
                   <TextField

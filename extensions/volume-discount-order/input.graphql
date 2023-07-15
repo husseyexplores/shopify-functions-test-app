@@ -38,7 +38,7 @@ query Input {
           id
           product {
             id
-            metafield(key: "custom", namespace: "volume_discount_config") {
+            metafield(namespace: "custom", key: "volume_discount_config") {
               type
               value
             }
