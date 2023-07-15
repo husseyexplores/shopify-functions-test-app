@@ -2,5 +2,5 @@
 name = "Custom Discounts"
 
 scopes = "write_products,write_cart_transforms,write_discounts"
-extension_directories = ["extensions/*"]
-web_directories = ["web/*"]
+extension_directories = ["./extensions/*"]
+web_directories = ["./web", "./web/frontend"]

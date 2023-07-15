@@ -28,12 +28,13 @@ import {
   PageActions,
 } from '@shopify/polaris'
 
+import { DiscountProvider } from '../../../../components'
 import metafields from '../../../../metafields'
 import { useAuthenticatedFetch } from '../../../../hooks'
 
 const todaysDate = new Date()
 
-export default function VolumeNew() {
+function VolumeNew() {
   // Read the function ID from the URL
   const { functionId } = useParams()
 
@@ -289,6 +290,14 @@ export default function VolumeNew() {
         </Layout.Section>
       </Layout>
     </Page>
+  )
+}
+
+export default function VolumeNewPage() {
+  return (
+    <DiscountProvider>
+      <VolumeNew />
+    </DiscountProvider>
   )
 }
 

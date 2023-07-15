@@ -32,12 +32,13 @@ import {
   Breadcrumbs,
 } from '@shopify/polaris'
 
+import { DiscountProvider } from '../../../../components'
 import metafields from '../../../../metafields'
 import { useAuthenticatedFetch, useDiscount } from '../../../../hooks'
 
 const todaysDate = new Date()
 
-export default function VolumeNew() {
+function VolumeDetails() {
   const app = useAppBridge()
   const redirect = Redirect.create(app)
   const currencyCode = CurrencyCode.Usd
@@ -343,6 +344,14 @@ export default function VolumeNew() {
         </Layout>
       )}
     </Page>
+  )
+}
+
+export default function VolumeDetailsPage() {
+  return (
+    <DiscountProvider>
+      <VolumeDetails />
+    </DiscountProvider>
   )
 }
 
