@@ -23,33 +23,25 @@ export default (input: InputQuery): FunctionResult => {
   const totalApplicableDiscount = roundUpto(
     input.cart.lines.reduce<number>((acc, line) => {
       const m = line.merchandise;
+
       if (m.__typename !== "ProductVariant") return acc;
 
-      const mf = m.product.metafield;
+      const mf = m.product.volume_discount_config;
       if (!mf) return acc;
 
       if (mf.type !== "json") return acc;
       const productConfig = parseProductDiscountConfig(mf.value);
+
       if (!productConfig) return acc;
 
       const matchedConfig = productConfig.find(
         (config) =>
           line.quantity >= config.range[0] && line.quantity <= config.range[1]
       );
+
       if (!matchedConfig) return acc;
 
-      let discountValue = 0;
-      if (
-        matchedConfig.discount_type === "percentage" ||
-        matchedConfig.discount_type === "fixed"
-      ) {
-        discountValue = matchedConfig.discount;
-      }
-
-      if (matchedConfig.discount_type === "fixed_each_item") {
-        discountValue = matchedConfig.discount * line.quantity;
-      }
-
+      const discountValue = calculateLineDiscount(line, matchedConfig);
       return acc + discountValue;
     }, 0),
     2
@@ -85,6 +77,27 @@ function roundUpto(num: number, decimals = 2) {
   return Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals);
 }
 
+function calculateLineDiscount(
+  line: InputQuery["cart"]["lines"][number],
+  matchedConfig: ProductDiscountConfig[number]
+) {
+  if (!matchedConfig) return 0;
+
+  if (matchedConfig.discount_type === "fixed") {
+    return matchedConfig.discount;
+  } else if (matchedConfig.discount_type === "fixed_each_item") {
+    return matchedConfig.discount * line.quantity;
+  } else if (matchedConfig.discount_type === "percentage") {
+    const totalPrice = Number(line.cost.totalAmount.amount);
+
+    // Should never happen - but just in case
+    if (Number.isNaN(totalPrice)) return 0;
+
+    return (totalPrice * matchedConfig.discount) / 100;
+  }
+  return 0;
+}
+
 function parseProductDiscountConfig(
   input: unknown
 ): ProductDiscountConfig | null {
@@ -97,7 +110,7 @@ function parseProductDiscountConfig(
   }
   if (!Array.isArray(input)) return null;
 
-  const allLinesOk = input.every((line) => {
+  const allLinesOk = input.every((line, lineIndex) => {
     const isObject = line != null && typeof line === "object";
     if (!isObject) return false;
 
@@ -110,6 +123,7 @@ function parseProductDiscountConfig(
 
     if (!isRange) return false;
     if (typeof line.discount !== "number" || line.discount < 0) return false;
+
     if (typeof line.discount_type !== "string") return false;
     if (
       line.discount_type !== "fixed" &&
@@ -129,6 +143,7 @@ function parseProductDiscountConfig(
     if (line.discount_type === "percentage" && line.discount > 100) {
       line.discount = 100;
     }
+    return true;
   });
 
   return allLinesOk ? input : null;

@@ -17,16 +17,10 @@
   },
   "graphql": {
     "projects": {
-      "product-discount-fn-ts": {
-        "schema": "./extensions/product-discount-fn-ts/schema.graphql",
+      "volume-discount-order": {
+        "schema": "./extensions/volume-discount-order/schema.graphql",
         "documents": [
-          "./extensions/product-discount-fn-ts/input.graphql"
-        ]
-      },
-      "order-discount-fn-ts": {
-        "schema": "./extensions/order-discount-fn-ts/schema.graphql",
-        "documents": [
-          "./extensions/order-discount-fn-ts/input.graphql"
+          "./extensions/volume-discount-order/input.graphql"
         ]
       }
     }

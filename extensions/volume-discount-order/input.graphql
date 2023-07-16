@@ -38,12 +38,16 @@ query Input {
           id
           product {
             id
-            metafield(namespace: "custom", key: "volume_discount_config") {
+            volume_discount_config: metafield(
+              namespace: "custom"
+              key: "volume_discount_config"
+            ) {
               type
               value
             }
           }
         }
+        __typename
       }
       cost {
         amountPerQuantity {

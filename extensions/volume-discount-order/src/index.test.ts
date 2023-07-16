@@ -7,20 +7,54 @@ import {
   InputQuery,
 } from "../generated/api";
 
-function createCart(metafieldConfig: any): InputQuery["cart"] {
+type CreateCartInput = {
+  items: {
+    id: string | number;
+    price: string;
+    quantity: number;
+    product: {
+      id: string | number;
+      volume_discount_config: string | any[];
+    };
+  }[];
+};
+function createCart({ items }: CreateCartInput): InputQuery["cart"] {
   let cart: InputQuery["cart"] = {
-    lines: [
-      {
-        id: "gid://shopify/CartLine/0",
-        quantity: 4,
+    lines: items.map((x, i) => {
+      const variantId =
+        typeof x.id === "number"
+          ? `gid://shopify/ProductVariant/${x.id}`
+          : x.id;
+      const productId =
+        typeof x.product.id === "number"
+          ? `gid://shopify/Product/${x.product.id}`
+          : x.product.id;
+
+      const priceNum = Number(x.price);
+      if (
+        Number.isNaN(priceNum) ||
+        !Number.isFinite(priceNum) ||
+        priceNum < 0
+      ) {
+        throw new Error(`Invalid price at index "${i}"`);
+      }
+
+      const priceTotal = priceNum * x.quantity;
+
+      return {
+        id: `gid://shopify/CartLine/${1}`,
+        quantity: Math.floor(x.quantity),
         merchandise: {
-          id: "gid://shopify/ProductVariant/1338274873373",
+          id: variantId,
           product: {
-            id: "gid://shopify/Product/114833883165",
-            metafield: metafieldConfig
+            id: productId,
+            volume_discount_config: x.product.volume_discount_config
               ? {
                   type: "json",
-                  value: JSON.stringify(metafieldConfig),
+                  value:
+                    typeof x.product.volume_discount_config !== "string"
+                      ? JSON.stringify(x.product.volume_discount_config)
+                      : x.product.volume_discount_config,
                   __typename: "Metafield",
                 }
               : null,
@@ -30,24 +64,24 @@ function createCart(metafieldConfig: any): InputQuery["cart"] {
         },
         cost: {
           amountPerQuantity: {
-            amount: 10000,
+            amount: x.price,
             currencyCode: CurrencyCode.Usd,
             __typename: "MoneyV2",
           },
           subtotalAmount: {
-            amount: 0,
+            amount: priceTotal.toFixed(2),
             currencyCode: CurrencyCode.Usd,
             __typename: "MoneyV2",
           },
           totalAmount: {
-            amount: 0,
+            amount: priceTotal.toFixed(2),
             currencyCode: CurrencyCode.Usd,
             __typename: "MoneyV2",
           },
           __typename: "CartLineCost",
         },
-      },
-    ],
+      };
+    }),
     cost: {
       subtotalAmount: {
         amount: 0,
@@ -63,46 +97,67 @@ function createCart(metafieldConfig: any): InputQuery["cart"] {
     },
   };
 
-  cart.lines.forEach((line) => {
-    const lineSubtotal = line.cost.amountPerQuantity.amount * line.quantity;
-    line.cost.subtotalAmount.amount = lineSubtotal;
-    line.cost.totalAmount.amount = lineSubtotal;
-  });
-
   const cartSubtotal = cart.lines.reduce(
-    (sum, line) => line.cost.subtotalAmount.amount + sum,
+    (sum, line) => Number(line.cost.subtotalAmount.amount) + sum,
     0
   );
-  cart.cost.subtotalAmount.amount = cartSubtotal;
-  cart.cost.totalAmount.amount = cartSubtotal;
+
+  cart.cost.subtotalAmount.amount = cartSubtotal.toFixed(2);
+  cart.cost.totalAmount.amount = cartSubtotal.toFixed(2);
 
   return cart;
 }
 
 describe("order discounts function", () => {
   it("returns no discounts without configuration", () => {
+    // console.log(c1);
+
     const result = orderDiscounts({
       discountNode: {},
-      cart: createCart([
-        {
-          range: [3, 5],
-          discount: 10,
-          discount_type: "percentage",
-        },
-        {
-          range: [6, 10],
-          discount: 10,
-          discount_type: "percentage",
-        },
-      ]),
+      cart: createCart({
+        items: [
+          {
+            id: 1338274873373,
+            price: "100.0",
+            quantity: 10,
+            product: {
+              id: 114833883165,
+              volume_discount_config:
+                '[{"range":[3,5],"discount":10,"discount_type":"percentage"},{"range":[6,10],"discount":50,"discount_type":"percentage"}]',
+              // volume_discount_config: [
+              //   {
+              //     range: [3, 5],
+              //     discount: 10,
+              //     discount_type: "percentage", // "percentage" | "fixed" | "fixed_each_item"
+              //   },
+              //   {
+              //     range: [6, 100000000],
+              //     discount: 50,
+              //     discount_type: "percentage",
+              //   },
+              // ],
+            },
+          },
+        ],
+      }),
       __typename: "Input",
     });
 
     const expected: FunctionResult = {
-      discounts: [],
+      discounts: [
+        expect.objectContaining({
+          targets: [{ orderSubtotal: { excludedVariantIds: [] } }],
+          value: {
+            fixedAmount: {
+              amount: 500,
+            },
+          },
+        }),
+      ],
       discountApplicationStrategy: DiscountApplicationStrategy.First,
     };
 
+    // expect(result).toEqual(expected);
     expect(result).toEqual(expected);
   });
 });
