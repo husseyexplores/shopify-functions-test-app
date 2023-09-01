@@ -101,8 +101,12 @@ function VolumeDetails() {
         metafields: [
           {
             id: discount.configurationId, // metafield id is required for update
-            namespace: metafields.volume_discount.namespace,
-            key: metafields.volume_discount.key,
+
+            // NAMESPACE and KEY can't be changed - must not specify again
+            // otherwise it errors out
+
+            // namespace: metafields.volume_discount.namespace,
+            // key: metafields.volume_discount.key,
             type: 'json',
             value: JSON.stringify({
               quantity: parseInt(form.configuration.quantity),
@@ -282,7 +286,6 @@ function VolumeDetails() {
               performance={{
                 status: DiscountStatus.Scheduled,
                 usageCount: 0,
-                isEditing: false,
               }}
               minimumRequirements={{
                 requirementType: requirementType.value,

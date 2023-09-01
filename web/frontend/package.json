@@ -13,25 +13,25 @@
     "node": ">= 18.16.1"
   },
   "dependencies": {
-    "@shopify/app-bridge": "^3.7.8",
-    "@shopify/app-bridge-react": "^3.7.8",
-    "@shopify/discount-app-components": "github:pnmcosta/discount-app-components-v11",
-    "@shopify/polaris": "^11.4.5",
-    "@shopify/polaris-icons": "^7.3.0",
+    "@shopify/app-bridge": "^3.7.9",
+    "@shopify/app-bridge-react": "^3.7.9",
+    "@shopify/discount-app-components": "^1.2.0",
+    "@shopify/polaris": "^11.14.0",
+    "@shopify/polaris-icons": "^7.8.1",
     "@shopify/react-form": "^2.5.5",
     "@shopify/react-i18n": "^7.8.0",
-    "@tanstack/react-query": "^4.29.19",
-    "@tanstack/react-query-devtools": "^4.29.19",
-    "@vitejs/plugin-react": "^4.0.2",
+    "@tanstack/react-query": "^4.33.0",
+    "@tanstack/react-query-devtools": "^4.33.0",
     "graphql-request": "^6.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.14.1",
-    "vite": "^4.4.2"
+    "react-router-dom": "^6.15.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
-    "prettier": "^3.0.0"
+    "@vitejs/plugin-react": "^4.0.4",
+    "prettier": "^3.0.3",
+    "vite": "^4.4.2"
   }
 }
